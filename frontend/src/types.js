@@ -1,0 +1,13 @@
+const ACTION_TYPES = {
+  CATEGORIES: {
+    GET_CATEGORIES: 'GET_CATEGORIES',
+  },
+  POSTS: {
+    GET_POSTS: 'GET_POSTS'
+  },
+  COMMENTS: {
+    GET_COMMENTS: 'GET_COMMENTS'
+  }
+}
+
+export default ACTION_TYPES
