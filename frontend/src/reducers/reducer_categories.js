@@ -1,7 +1,11 @@
-import initialState from '../store/initial-state'
 import ACTION_TYPES from '../actions/types'
 
-export default function(state=initialState.categories, action) {
+const initialState = { 
+  categories: [], 
+  error:""
+}
+
+export default function(state=initialState, action) {
   switch(action.type){
     case ACTION_TYPES.CATEGORIES.GET_CATEGORIES_SUCCESS:
       return { categories:action.payload, error:"" }

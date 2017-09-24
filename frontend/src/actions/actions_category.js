@@ -7,15 +7,14 @@ export function getCategories() {
       type: ACTION_TYPES.CATEGORIES.GET_CATEGORIES_REQUEST
     })
     categoryServices.getCategories()
-    .then(data=>dispatch({
+    .then(({data:{categories}})=>dispatch({
       type: ACTION_TYPES.CATEGORIES.GET_CATEGORIES_SUCCESS,
-      payload: data
+      payload: categories
     }))
     .catch(error=>{
-      console.log("error in action", error.response)
       dispatch({
         type: ACTION_TYPES.CATEGORIES.GET_CATEGORIES_FAILURE,
-        error: error
+        error: error.response.data.error
       })
     })
   }
