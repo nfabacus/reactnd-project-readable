@@ -1,6 +1,6 @@
 const initialState = {
-  categories: [],
-  comments: {}
+  categories: { categories:[], error:""},
+  comments: { comments:[], error:""}
 }
 
 export default initialState

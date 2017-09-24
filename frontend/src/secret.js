@@ -1,0 +1,1 @@
+export const authorization="super-secret-yo"
