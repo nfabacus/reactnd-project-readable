@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCategories } from '../actions/actions_category'
 import { getPosts } from '../actions/actions_post'
+import 'font-awesome/css/font-awesome.css'
 
 class Default extends Component {
   constructor(props){
@@ -117,9 +118,20 @@ class Default extends Component {
           <div className="col-sm-12">
             <h2>List of Posts</h2>
             <div className="form-group">
-              <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">Sort By Votes</button>
+              <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">Sort By Votes {this.state.voteScoreSorting==="d"?
+                <i className="fa fa-sort-desc" aria-hidden="true"></i>:
+                this.state.voteScoreSorting==="a"?
+                <i className="fa fa-sort-asc" aria-hidden="true"></i>:
+                ""
+                }
+              </button>
               &emsp;
-              <button onClick={this.toggleTimestampSorting} className="btn btn-default">Sort By Date</button>
+              <button onClick={this.toggleTimestampSorting} className="btn btn-default">Sort By Date {this.state.timestampSorting==="d"?
+                <i className="fa fa-sort-desc" aria-hidden="true"></i>:
+                this.state.timestampSorting==="a"?
+                <i className="fa fa-sort-asc" aria-hidden="true"></i>:
+                ""
+                }</button>
             </div>
               {
                 this.renderAllPosts()
