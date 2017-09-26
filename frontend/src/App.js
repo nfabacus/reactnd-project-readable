@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
 import Default from './components/default'
+import CategoryView from './components/category-view'
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/postdetail" render={()=>
             <h1>Post details</h1>
           }/>
+          <Route path="/category/:url" component={ CategoryView }/>
         </Switch>
       </div>
     );

@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getCategories } from '../actions/actions_category'
 import { getPosts } from '../actions/actions_post'
 
 class Default extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      voteScoreSorting: null,
+      timestampSorting: null,
+      selectedSorting: null
+    }
+  }
 
   componentDidMount(){
     this.props.getCategories()
@@ -13,13 +22,52 @@ class Default extends Component {
   renderCategoryList() {
     if(this.props.categories.length !==0){
       return this.props.categories.map(({name, path})=>
-        <li key={path}><a><h3>{name}</h3></a></li>)
+        <Link to={`/category/${name}`} key={path}><h3>{name}</h3></Link>)
+    }
+  }
+
+  toggleVoteScoreSorting=()=>{
+    this.setState({
+      selectedSorting: "voteScoreSorting",
+      voteScoreSorting: this.state.voteScoreSorting ==="null"?"d":this.state.voteScoreSorting==="d"?"a":"null",
+      timestampSorting: null
+    })
+  }
+
+  toggleTimestampSorting=()=>{
+    this.setState({
+      selectedSorting: "timestampSorting",
+      voteScoreSorting: null,
+      timestampSorting: this.state.timestampSorting ==="null"?"d":this.state.timestampSorting==="d"?"a":"null"
+    })
+  }
+
+  sortByVoteScore = (a, b) =>{
+    const { voteScoreSorting } = this.state
+    if(voteScoreSorting === null) return 0
+    return voteScoreSorting === 'a' ?a.voteScore-b.voteScore:b.voteScore-a.voteScore
+  }
+
+  sortByTimestamp =(a, b)=>{
+    const { timestampSorting } = this.state
+    if(timestampSorting ===null) return 0
+    return timestampSorting ==="a"? a.timestamp-b.timestamp: b.timestamp-a.timestamp
+  }
+
+  sortBySelectedSorting=(a, b)=> {
+    switch(this.state.selectedSorting) {
+      case 'voteScoreSorting':
+        return this.sortByVoteScore(a, b)
+      case 'timestampSorting':
+        return this.sortByTimestamp(a, b)
+      default:
+        return 0
     }
   }
 
   renderAllPosts() {
     if(this.props.posts.length !==0) {
-      return this.props.posts.map(({
+      return this.props.posts.sort(this.sortBySelectedSorting).map(({
         author,
         body,
         category,
@@ -28,16 +76,21 @@ class Default extends Component {
         timestamp,
         title,
         voteScore
-      })=>
-      <li key={id}>
-        <div>
-          <h3>{title} by {author} on {timestamp}</h3>
-          <h3>Category: {category}</h3>
-          <h3>Votes: {voteScore}</h3>
-          <p>{body}</p>
+      })=>{
+        let dateString = new Date(timestamp).toString()
+        return (
+          <div  key={id} className="card mb-2">
+          <div className="card-block bg-warning">
+            <h3 className="card-text">{title}</h3>
+            <h3 className="card-text">By: {author}</h3>
+            <p className="card-text">Submitted on: {dateString}</p>
+            <h4 className="card-text">Category: {category}</h4>
+            <h4 className="card-text">Votes: {voteScore}</h4>
+            <p className="card-text">{body}</p>
+          </div>
         </div>
-      </li>
-      )
+        )
+      })
     }
   }
 
@@ -46,22 +99,31 @@ class Default extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-12">
-            <h1>List of Categories</h1>
-            <ul className="list--no-bullet">
-              {
-                this.renderCategoryList()
-              }
-            </ul>
+            <br />
+            <div className="card text-center">
+              <div className="card-header">
+              <h2 className="card-title">List of Categories</h2>
+              </div>
+              <div className="card-block">
+                {
+                  this.renderCategoryList()
+                }
+              </div>
+            </div>
           </div>
         </div>
+        <br />
         <div className="row">
           <div className="col-sm-12">
-            <h1>List of Posts</h1>
-            <ul className="list--no-bullet">
+            <h2>List of Posts</h2>
+            <div className="form-group">
+              <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">Sort By Votes</button>
+              &emsp;
+              <button onClick={this.toggleTimestampSorting} className="btn btn-default">Sort By Date</button>
+            </div>
               {
                 this.renderAllPosts()
               }
-            </ul>
           </div>
         </div>
       </div>
