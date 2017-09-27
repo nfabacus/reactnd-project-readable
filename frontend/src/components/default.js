@@ -30,7 +30,7 @@ class Default extends Component {
   toggleVoteScoreSorting=()=>{
     this.setState({
       selectedSorting: "voteScoreSorting",
-      voteScoreSorting: this.state.voteScoreSorting ==="null"?"d":this.state.voteScoreSorting==="d"?"a":"null",
+      voteScoreSorting: this.state.voteScoreSorting ===null?"d":this.state.voteScoreSorting==="d"?"a":null,
       timestampSorting: null
     })
   }
@@ -39,7 +39,7 @@ class Default extends Component {
     this.setState({
       selectedSorting: "timestampSorting",
       voteScoreSorting: null,
-      timestampSorting: this.state.timestampSorting ==="null"?"d":this.state.timestampSorting==="d"?"a":"null"
+      timestampSorting: this.state.timestampSorting ===null?"d":this.state.timestampSorting==="d"?"a":null
     })
   }
 
@@ -117,21 +117,23 @@ class Default extends Component {
         <div className="row">
           <div className="col-sm-12">
             <h2>List of Posts</h2>
+            <Link to="/post/new" className="btn btn-success m-3">Add A New Post</Link>
             <div className="form-group">
-              <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">Sort By Votes {this.state.voteScoreSorting==="d"?
-                <i className="fa fa-sort-desc" aria-hidden="true"></i>:
-                this.state.voteScoreSorting==="a"?
+            <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">
+            Sort By Votes {this.state.voteScoreSorting===null?
+            "":this.state.voteScoreSorting==="a"?
+            <i className="fa fa-sort-asc" aria-hidden="true"></i>:
+            <i className="fa fa-sort-desc" aria-hidden="true"></i>
+            }
+          </button>
+              &emsp;
+              <button onClick={this.toggleTimestampSorting} className="btn btn-default">
+                Sort By Date {this.state.timestampSorting===null?
+                "":this.state.timestampSorting==="a"?
                 <i className="fa fa-sort-asc" aria-hidden="true"></i>:
-                ""
+                <i className="fa fa-sort-desc" aria-hidden="true"></i>
                 }
               </button>
-              &emsp;
-              <button onClick={this.toggleTimestampSorting} className="btn btn-default">Sort By Date {this.state.timestampSorting==="d"?
-                <i className="fa fa-sort-desc" aria-hidden="true"></i>:
-                this.state.timestampSorting==="a"?
-                <i className="fa fa-sort-asc" aria-hidden="true"></i>:
-                ""
-                }</button>
             </div>
               {
                 this.renderAllPosts()

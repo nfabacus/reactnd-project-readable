@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Default from './components/default'
 import CategoryView from './components/category-view'
+import PostNew from './components/post-new/post-new_index'
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <h1>Post details</h1>
           }/>
           <Route path="/category/:url" component={ CategoryView }/>
+          <Route path="/post/new" component={ PostNew }/>
         </Switch>
       </div>
     );
