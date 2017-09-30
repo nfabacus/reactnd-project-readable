@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getCategoryPosts } from '../actions/actions_post'
 
 class CategoryView extends Component {
@@ -22,17 +23,11 @@ class CategoryView extends Component {
         voteScore,
         deleted
       })=>{
-        let dateString = new Date(timestamp).toString()
         return (
           <div  key={id} className="card mb-2">
           <div className="card-block bg-warning">
-            <h3 className="card-text">{title}</h3>
-            <h3 className="card-text">By: {author}</h3>
-            <p className="card-text">Submitted on: {dateString}</p>
-            <h4 className="card-text">Category: {category}</h4>
+            <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
             <h4 className="card-text">Votes: {voteScore}</h4>
-            <h4 className="card-text">"{body}"</h4>
-          
           </div>
         </div>
         )

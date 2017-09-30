@@ -9,9 +9,9 @@ class Default extends Component {
   constructor(props){
     super(props)
     this.state = {
-      voteScoreSorting: null,
+      voteScoreSorting: "d",
       timestampSorting: null,
-      selectedSorting: null
+      selectedSorting: "voteScoreSorting"
     }
   }
 
@@ -82,12 +82,9 @@ class Default extends Component {
         return (
           <div  key={id} className="card mb-2">
           <div className="card-block bg-warning">
-            <h3 className="card-text">{title}</h3>
-            <h3 className="card-text">By: {author}</h3>
-            <p className="card-text">Submitted on: {dateString}</p>
-            <h4 className="card-text">Category: {category}</h4>
+            <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
+            <p className="card-text">{dateString}</p>
             <h4 className="card-text">Votes: {voteScore}</h4>
-            <p className="card-text">{body}</p>
           </div>
         </div>
         )

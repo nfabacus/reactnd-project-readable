@@ -27,3 +27,20 @@ export function addNewPost(newPostObj) {
   })
 }
 
+export function getSinglePost(postId) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'GET',
+    url: `${api}/posts/${postId}`
+  })
+}
+
+export function updatePost(updatePostObj) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'PUT',
+    url: `${api}/posts/${updatePostObj.id}`,
+    data: updatePostObj
+  })
+}
+

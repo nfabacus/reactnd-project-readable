@@ -1,32 +1,57 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addNewPost } from '../../actions/actions_post'
-import _ from 'lodash'
+import { updatePost, getSinglePost } from '../actions/actions_post'
+import { getCategories } from '../actions/actions_category'
 
-class PostNew extends Component {
+class PostEdit extends Component {
   constructor(props){
     super(props)
     this.state = {
       title: "",
       body: "",
       author: "",
-      category: "react"
+      category: ""
+    }
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params
+    this.props.getCategories()
+    this.props.getSinglePost(id)
+    
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.categories!==this.props.categories){
+      this.setState({
+        category: nextProps.categories[0].name
+      })
+    }
+    if(nextProps.singlePost!==this.props.singlePost){
+      const { title, body, author, category } = nextProps.singlePost
+      this.setState({
+        title,
+        body,
+        author,
+        category
+      })
     }
   }
 
   handleFormSubmit=(e)=>{
     e.preventDefault()
     //send states
-    const newPostObj = {
-      id: _.uniqueId('post_'),
+    const { id } = this.props.match.params
+    const updatePostObj = {
+      id,
       timestamp: new Date().getTime(),
       title: this.state.title,
       body: this.state.body,
-      author: this.state.author,
-      category:this.state.category
+      // author: this.state.author,
+      // category:this.state.category
     }
-    this.props.addNewPost(newPostObj,()=>{
+    this.props.updatePost(updatePostObj,()=>{
       console.log("props::", this.props)
       this.props.history.push("/")
     })
@@ -45,23 +70,12 @@ class PostNew extends Component {
     })
   }
 
-  onAuthorChange = (e)=>{
-    this.setState ({
-      author: e.target.value
-    })
-  }
-
-  onCategoryChange = (e)=>{
-    this.setState ({
-      category: e.target.value
-    })
-  }
-
   render() {
+    const { id } = this.props.match.params
     return (
       <div className="container">
         <div className="jumbotron mt-3">
-          <h3>Create a Post</h3>
+          <h3>Edit the Post</h3>
         </div>
         <div className="row">
           <div className="col-sm-12">
@@ -83,38 +97,24 @@ class PostNew extends Component {
               <div className="form-group">
                 <label htmlFor="body">Body: </label>
                 &emsp;
-                <input
+                <textarea
                   value={this.state.body}
                   onChange={this.onBodyChange}
-                  type="text"
                   name="body"
                   className="form-control"
-                />
+                ></textarea>
               </div>
               <div className="form-group">
-                <label htmlFor="author">Author: </label>
-                &emsp;
-                <input
-                  value={this.state.author}
-                  onChange={this.onAuthorChange}
-                  type="text"
-                  name="author"
-                  className="form-control"
-                />
+                <label htmlFor="author">Author: {this.state.author}</label>
               </div>
               <div className="form-group">
-                <label htmlFor="category">Category: </label>
-                &emsp;
-                <input
-                  value={this.state.category}
-                  onChange={this.onCategoryChange}
-                  type="text"
-                  name="category"
-                  className="form-control"
-                />
+                <label htmlFor="category">Category:{this.state.category}</label>
               </div>
               <div className="form-group">
-                <button type="submit" name="category" className="btn btn-success">post it!</button>
+                <button type="submit" name="category" className="btn btn-success m-1">post it!</button>
+                <Link to={`/posts/${id}`}>
+                  <button className="btn btn-default m-1">Cancel</button>
+                </Link>
               </div>
             </form>
             
@@ -127,9 +127,10 @@ class PostNew extends Component {
 
 const mapStateToProps = (state)=>{
   return {
-    categories: state.categories.categories
+    categories: state.categories.categories,
+    singlePost: state.posts.singlePost
   }
 }
 
-export default connect(mapStateToProps,{addNewPost})(PostNew)
+export default connect(mapStateToProps,{getCategories, getSinglePost, updatePost })(PostEdit)
 

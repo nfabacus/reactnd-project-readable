@@ -65,3 +65,57 @@ export function addNewPost(newPostObj, callback){
     })
   }
 }
+
+export function getSinglePost(postId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.GET_SINGLE_POST_REQUEST
+    })
+    postServices.getSinglePost(postId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.GET_SINGLE_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.GET_SINGLE_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}
+
+export function updatePost(updatePostObj, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.UPDATE_POST_REQUEST
+    })
+    postServices.updatePost(updatePostObj)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.UPDATE_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.UPDATE_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}
