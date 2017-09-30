@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addNewPost } from '../../actions/actions_post'
+import _ from 'lodash'
 
 class PostNew extends Component {
   constructor(props){
@@ -9,13 +11,26 @@ class PostNew extends Component {
       title: "",
       body: "",
       author: "",
-      category: ""
+      category: "react"
     }
   }
 
   handleFormSubmit=(e)=>{
     e.preventDefault()
     //send states
+    const newPostObj = {
+      id: _.uniqueId('post_'),
+      timestamp: new Date().getTime(),
+      title: this.state.title,
+      body: this.state.body,
+      author: this.state.author,
+      category:this.state.category
+    }
+    this.props.addNewPost(newPostObj,()=>{
+      console.log("props::", this.props)
+      this.props.history.push("/")
+    })
+
   }
 
   onTitleChange = (e)=>{
@@ -110,5 +125,11 @@ class PostNew extends Component {
   }
 }
 
-export default connect(null,{})(PostNew)
+const mapStateToProps = (state)=>{
+  return {
+    categories: state.categories.categories
+  }
+}
+
+export default connect(mapStateToProps,{addNewPost})(PostNew)
 

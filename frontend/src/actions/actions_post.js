@@ -38,3 +38,30 @@ export function getCategoryPosts(category) {
     })
   }
 }
+
+export function addNewPost(newPostObj, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.ADD_NEW_POST_REQUEST
+    })
+    postServices.addNewPost(newPostObj)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.ADD_NEW_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.ADD_NEW_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}

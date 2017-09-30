@@ -18,3 +18,12 @@ export function getPosts() {
   })
 }
 
+export function addNewPost(newPostObj) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'POST',
+    url: `${api}/posts`,
+    data: newPostObj
+  })
+}
+
