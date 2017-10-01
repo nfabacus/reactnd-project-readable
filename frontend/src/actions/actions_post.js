@@ -119,3 +119,30 @@ export function updatePost(updatePostObj, callback){
     })
   }
 }
+
+export function deletePost(postId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.DELETE_POST_REQUEST
+    })
+    postServices.deletePost(postId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.DELETE_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.DELETE_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}

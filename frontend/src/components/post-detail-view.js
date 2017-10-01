@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getSinglePost } from '../actions/actions_post'
+import { getSinglePost, deletePost } from '../actions/actions_post'
+import Comments from './comments-view'
 
 class PostDetailView extends Component {
   componentDidMount() {
@@ -9,6 +10,12 @@ class PostDetailView extends Component {
     console.log(id)
     this.props.getSinglePost(id)
     
+  }
+
+  onDeletePost = (id)=>{
+    this.props.deletePost(id, ()=>{
+      this.props.history.push("/")
+    })
   }
 
   renderSinglePost() {
@@ -21,7 +28,7 @@ class PostDetailView extends Component {
         author,
         category,
         voteScore,
-        deleted
+        // deleted
       } = this.props.singlePost
     
       let dateString = new Date(timestamp).toString()
@@ -32,7 +39,7 @@ class PostDetailView extends Component {
             <h3 className="card-text">By: {author}</h3>
             <div>
               <Link to={`/post/edit/${id}`} ><button className="btn btn-default m-1">Edit</button></Link>
-              <button className="btn btn-danger m-1">Delete</button>
+              <button className="btn btn-danger m-1" onClick={()=>this.onDeletePost(id)}>Delete</button>
             </div>
           </div>
           <div  key={id} className="card mb-2">
@@ -44,6 +51,7 @@ class PostDetailView extends Component {
               <h4 className="card-text">"{body}"</h4>
             </div>
           </div>
+          {id&&<Comments postId={id} />}
         </div>
       )
     }
@@ -71,4 +79,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps, {getSinglePost})(PostDetailView)
+export default connect(mapStateToProps, {getSinglePost, deletePost})(PostDetailView)

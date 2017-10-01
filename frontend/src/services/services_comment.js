@@ -2,53 +2,45 @@ import axios from 'axios'
 import { authorization } from '../secret'
 const api = "http://localhost:3001"
 
-export function getCategoryPosts(category) {
+export function getComments(postId) {
   return axios({
     headers: { 'Authorization': authorization },
     method: 'GET',
-    url: `${api}/${category}/posts`
+    url: `${api}/posts/${postId}/comments`
   })
 }
 
-export function getPosts() {
-  return axios({
-    headers: { 'Authorization': authorization },
-    method: 'GET',
-    url: `${api}/posts`
-  })
-}
-
-export function addNewPost(newPostObj) {
+export function addNewComment(newCommentObj) {
   return axios({
     headers: { 'Authorization': authorization },
     method: 'POST',
-    url: `${api}/posts`,
-    data: newPostObj
+    url: `${api}/comments`,
+    data: newCommentObj
   })
 }
 
-export function getSinglePost(postId) {
+export function getSingleComment(commentId) {
   return axios({
     headers: { 'Authorization': authorization },
     method: 'GET',
-    url: `${api}/posts/${postId}`
+    url: `${api}/comments/${commentId}`
   })
 }
 
-export function updatePost(updatePostObj) {
+export function updateComment(updateCommentObj) {
   return axios({
     headers: { 'Authorization': authorization },
     method: 'PUT',
-    url: `${api}/posts/${updatePostObj.id}`,
-    data: updatePostObj
+    url: `${api}/comments/${updateCommentObj.id}`,
+    data: updateCommentObj
   })
 }
 
-export function deletePost(postId) {
+export function deleteComment(commentId) {
   return axios({
     headers: { 'Authorization': authorization },
     method: 'DELETE',
-    url: `${api}/posts/${postId}`
+    url: `${api}/comments/${commentId}`
   })
 }
 

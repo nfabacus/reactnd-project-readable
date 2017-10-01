@@ -81,12 +81,12 @@ class Default extends Component {
         let dateString = new Date(timestamp).toString()
         return (
           <div  key={id} className="card mb-2">
-          <div className="card-block bg-warning">
-            <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
-            <p className="card-text">{dateString}</p>
-            <h4 className="card-text">Votes: {voteScore}</h4>
+            <div className="card-block bg-warning">
+              <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
+              <p className="card-text">{dateString}</p>
+              <h4 className="card-text">Votes: {voteScore}</h4>
+            </div>
           </div>
-        </div>
         )
       })
     }
