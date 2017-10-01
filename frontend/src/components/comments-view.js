@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
+import CommentsEdit from './comments-edit'
+import CommentsNew from './comments-new'
 import PropTypes from 'prop-types'
 import { getComments, updateComment } from '../actions/actions_comment'
 
@@ -74,28 +76,26 @@ class Comments extends Component {
     })
   }
 
+  cancelCommentEdit=()=>{
+    this.setState({
+      isCommentEditMode: false,
+      selectedComment: null
+    })
+  }
+
   render() {
     return (
       <div className="row">
         <div className="col-sm-12">
           <div className="card">
-            <div className="card-block">
-              <button className="btn btn-success">Add A New Comment</button>
-            </div>
-            { this.state.isCommentEditMode&&
-              <div className="card-block">
-                <input
-                  className="form-control"
-                  value={this.state.selectedComment.body}
-                  onChange={this.onCommentInputChange}
-                />
-                <button
-                  className="btn btn-warning m-2"
-                  onClick={this.saveCommentChange}
-                >Save
-                </button>
-              </div>
-            }
+            <CommentsNew postId={this.props.postId} />
+            <CommentsEdit
+              isCommentEditMode={this.state.isCommentEditMode}
+              selectedComment={this.state.selectedComment}
+              onCommentInputChange={this.onCommentInputChange}
+              saveCommentChange={this.saveCommentChange}
+              cancelCommentEdit={this.cancelCommentEdit}
+            />
             <div className="card-block">
               {
                 this.renderAllComments()

@@ -53,7 +53,7 @@ class PostEdit extends Component {
     }
     this.props.updatePost(updatePostObj,()=>{
       console.log("props::", this.props)
-      this.props.history.push("/")
+      this.props.history.push(`/posts/${id}`)
     })
 
   }
