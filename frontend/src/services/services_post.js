@@ -52,3 +52,20 @@ export function deletePost(postId) {
   })
 }
 
+export function upVotePost(postId) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'POST',
+    url: `${api}/posts/${postId}`,
+    data: {option:"upVote"}
+  })
+}
+
+export function downVotePost(postId) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'POST',
+    url: `${api}/posts/${postId}`,
+    data: {option:"downVote"}
+  })
+}

@@ -127,3 +127,57 @@ export function deleteComment(commentId, callback){
     })
   }
 }
+
+export function upVoteComment(commentId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.COMMENTS.UPVOTE_COMMENT_REQUEST
+    })
+    commentServices.upVoteComment(commentId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.COMMENTS.UPVOTE_COMMENT_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.COMMENTS.UPVOTE_COMMENT_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}
+
+export function downVoteComment(commentId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.COMMENTS.DOWNVOTE_COMMENT_REQUEST
+    })
+    commentServices.downVoteComment(commentId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.COMMENTS.DOWNVOTE_COMMENT_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.COMMENTS.DOWNVOTE_COMMENT_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCategories } from '../actions/actions_category'
-import { getPosts } from '../actions/actions_post'
+import { getPosts, upVotePost, downVotePost } from '../actions/actions_post'
 import 'font-awesome/css/font-awesome.css'
 
 class Default extends Component {
@@ -84,7 +84,15 @@ class Default extends Component {
             <div className="card-block bg-warning">
               <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
               <p className="card-text">{dateString}</p>
-              <h4 className="card-text">Votes: {voteScore}</h4>
+              <h4 className="card-text">
+                Votes: {voteScore}
+                <i 
+                  onClick={()=>this.props.downVotePost(id)}
+                  className="fa fa-thumbs-o-down m-2" aria-hidden="true"></i>
+                <i 
+                  onClick={()=>this.props.upVotePost(id)}
+                  className="fa fa-thumbs-o-up m-2" aria-hidden="true"></i>
+              </h4>
             </div>
           </div>
         )
@@ -116,13 +124,13 @@ class Default extends Component {
             <h2>List of Posts</h2>
             <Link to="/post/new" className="btn btn-success m-3">Add A New Post</Link>
             <div className="form-group">
-            <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">
-            Sort By Votes {this.state.voteScoreSorting===null?
-            "":this.state.voteScoreSorting==="a"?
-            <i className="fa fa-sort-asc" aria-hidden="true"></i>:
-            <i className="fa fa-sort-desc" aria-hidden="true"></i>
-            }
-          </button>
+              <button onClick={this.toggleVoteScoreSorting} className="btn btn-default">
+                Sort By Votes {this.state.voteScoreSorting===null?
+                "":this.state.voteScoreSorting==="a"?
+                <i className="fa fa-sort-asc" aria-hidden="true"></i>:
+                <i className="fa fa-sort-desc" aria-hidden="true"></i>
+                }
+              </button>
               &emsp;
               <button onClick={this.toggleTimestampSorting} className="btn btn-default">
                 Sort By Date {this.state.timestampSorting===null?
@@ -149,4 +157,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {getCategories, getPosts})(Default)
+export default connect(mapStateToProps, {getCategories, getPosts, upVotePost, downVotePost })(Default)

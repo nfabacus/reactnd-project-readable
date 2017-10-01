@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addNewPost } from '../actions/actions_post'
 import { getCategories } from '../actions/actions_category'
-import _ from 'lodash'
+import _ from 'lodash-uuid'
 
 class PostNew extends Component {
   constructor(props){
@@ -32,19 +32,22 @@ class PostNew extends Component {
   handleFormSubmit=(e)=>{
     e.preventDefault()
     //send states
-    const newPostObj = {
-      id: _.uniqueId('post_'),
-      timestamp: new Date().getTime(),
-      title: this.state.title,
-      body: this.state.body,
-      author: this.state.author,
-      category:this.state.category
+    if(this.state.title.trim()===""||this.state.title.trim()===""||this.state.author.trim()===""||this.state.category.trim()===""){
+      alert("Please fill in all the information.")
+    } else {
+      const newPostObj = {
+        id: _.uuid(),
+        timestamp: new Date().getTime(),
+        title: this.state.title,
+        body: this.state.body,
+        author: this.state.author,
+        category:this.state.category
+      }
+      this.props.addNewPost(newPostObj,()=>{
+        console.log("props::", this.props)
+        this.props.history.push("/")
+      })
     }
-    this.props.addNewPost(newPostObj,()=>{
-      console.log("props::", this.props)
-      this.props.history.push("/")
-    })
-
   }
 
   onTitleChange = (e)=>{

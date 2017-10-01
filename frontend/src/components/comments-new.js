@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addNewComment, getComments } from '../actions/actions_comment'
-import _ from 'lodash'
+import _ from 'lodash-uuid'
 import PropTypes from 'prop-types'
 
 class CommentsNew extends Component {
@@ -24,14 +24,13 @@ class CommentsNew extends Component {
 
   handleAddNewComment=()=>{
     const newCommentObj = {
-      id: _.uniqueId('comment_'),
+      id: _.uuid(),
       timestamp: new Date().getTime(),
       body: this.state.body,
       author: this.state.author,
       parentId: this.props.postId
     }
     this.props.addNewComment(newCommentObj,()=>{
-      this.props.getComments(this.props.postId)
       this.setState({
         isNewCommentMode: false,
         body:"",

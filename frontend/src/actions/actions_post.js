@@ -146,3 +146,57 @@ export function deletePost(postId, callback){
     })
   }
 }
+
+export function upVotePost(postId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.UPVOTE_POST_REQUEST
+    })
+    postServices.upVotePost(postId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.UPVOTE_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.UPVOTE_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}
+
+export function downVotePost(postId, callback){
+  return (dispatch)=>{
+    dispatch({
+      type: ACTION_TYPES.POSTS.DOWNVOTE_POST_REQUEST
+    })
+    postServices.downVotePost(postId)
+    .then(({data})=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.DOWNVOTE_POST_SUCCESS,
+        payload: data
+      })
+      if(callback){
+        callback()
+      }
+      })
+    .catch(error=>{
+      dispatch({
+        type: ACTION_TYPES.POSTS.DOWNVOTE_POST_FAILURE,
+        error: error.response.data.error
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+}

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router-dom'
 import CommentsEdit from './comments-edit'
 import CommentsNew from './comments-new'
 import PropTypes from 'prop-types'
-import { getComments, updateComment } from '../actions/actions_comment'
+import { getComments, updateComment, upVoteComment, downVoteComment } from '../actions/actions_comment'
 
 class Comments extends Component {
 
@@ -14,7 +13,14 @@ class Comments extends Component {
   }
 
   componentDidMount(){
+    console.log("this.props.postId::", this.props.postId)
     this.props.getComments(this.props.postId)
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.postId!==this.props.postId){
+      this.props.getComments(nextProps.postId)
+    }
   }
 
   sortByVoteScore=(a, b)=>{
@@ -52,7 +58,15 @@ class Comments extends Component {
                   onClick={()=>this.openCommentEditMode(id, body)}
                 >Edit
                 </button>
-                <h4 className="card-text">Votes: {voteScore}</h4>
+                <h4 className="card-text">
+                  Votes: {voteScore}
+                  <i 
+                  onClick={()=>this.props.downVoteComment(id)}
+                  className="fa fa-thumbs-o-down m-2" aria-hidden="true"></i>
+                  <i 
+                    onClick={()=>this.props.upVoteComment(id)}
+                    className="fa fa-thumbs-o-up m-2" aria-hidden="true"></i>
+                </h4>
               </div>
             </div>
           )
@@ -118,4 +132,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps, {getComments, updateComment})(Comments)
+export default connect(mapStateToProps, {getComments, updateComment, upVoteComment, downVoteComment })(Comments)

@@ -7,6 +7,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
+    "lodash-uuid": "0.0.3",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",

@@ -44,3 +44,21 @@ export function deleteComment(commentId) {
   })
 }
 
+export function upVoteComment(commentId) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'POST',
+    url: `${api}/comments/${commentId}`,
+    data: {option:"upVote"}
+  })
+}
+
+export function downVoteComment(commentId) {
+  return axios({
+    headers: { 'Authorization': authorization },
+    method: 'POST',
+    url: `${api}/comments/${commentId}`,
+    data: {option:"downVote"}
+  })
+}
+

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getSinglePost, deletePost } from '../actions/actions_post'
+import { getSinglePost, deletePost, upVotePost, downVotePost } from '../actions/actions_post'
 import Comments from './comments-view'
 
 class PostDetailView extends Component {
@@ -43,11 +43,19 @@ class PostDetailView extends Component {
             </div>
           </div>
           <div  key={id} className="card mb-2">
-            <div className="card-block bg-warning">
+            <div className="card-block">
               
               <p className="card-text">Submitted on: {dateString}</p>
               <h4 className="card-text">Category: {category}</h4>
-              <h4 className="card-text">Votes: {voteScore}</h4>
+              <h4 className="card-text">
+                Votes: {voteScore}
+                <i 
+                  onClick={()=>this.props.downVotePost(id)}
+                  className="fa fa-thumbs-o-down m-2" aria-hidden="true"></i>
+                <i 
+                  onClick={()=>this.props.upVotePost(id)}
+                  className="fa fa-thumbs-o-up m-2" aria-hidden="true"></i>
+              </h4>
               <h4 className="card-text">"{body}"</h4>
             </div>
           </div>
@@ -79,4 +87,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps, {getSinglePost, deletePost})(PostDetailView)
+export default connect(mapStateToProps, { getSinglePost, deletePost, upVotePost, downVotePost })(PostDetailView)
