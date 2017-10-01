@@ -19,12 +19,21 @@ export default function(state=initialState, action) {
     
     case  ACTION_TYPES.COMMENTS.ADD_NEW_COMMENT_FAILURE:
       return { ...state, error: action.error }
+
+    case ACTION_TYPES.COMMENTS.DELETE_COMMENT_SUCCESS:
+    return { ...state, comments:state.comments.filter(comment=>comment.id!==action.payload.id), error:""}
+    
+    case  ACTION_TYPES.COMMENTS.DELETE_COMMENT_FAILURE:
+      return { ...state, error: action.error }
     
     case ACTION_TYPES.COMMENTS.GET_SINGLE_COMMENT_SUCCESS:
       return { ...state, singleComment: action.payload, error:"" }
     
     case ACTION_TYPES.COMMENTS.GET_SINGLE_COMMENT_FAILURE:
       return { ...state, singleComment:{}, error: action.error }
+
+
+
     
     case ACTION_TYPES.COMMENTS.UPDATE_COMMENT_SUCCESS:
       const updateComments = state.comments.filter(comment=>comment.id !==action.payload.id).concat(action.payload)

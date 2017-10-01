@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import CommentsEdit from './comments-edit'
 import CommentsNew from './comments-new'
 import PropTypes from 'prop-types'
-import { getComments, updateComment, upVoteComment, downVoteComment } from '../actions/actions_comment'
+import { getComments, updateComment, upVoteComment, downVoteComment, deleteComment } from '../actions/actions_comment'
 
 class Comments extends Component {
 
@@ -35,6 +35,10 @@ class Comments extends Component {
     })
   }
 
+  onDeleteComment=(id)=>{
+    this.props.deleteComment(id)
+  }
+
   renderAllComments(){
     if(this.props.comments.length !==0) {
       return this.props.comments.sort(this.sortByVoteScore).map(({
@@ -57,6 +61,11 @@ class Comments extends Component {
                   className="btn btn-success m-2"
                   onClick={()=>this.openCommentEditMode(id, body)}
                 >Edit
+                </button>
+                <button
+                  className="btn btn-danger m-2"
+                  onClick={()=>{this.onDeleteComment(id)}}
+                >Delete 
                 </button>
                 <h4 className="card-text">
                   Votes: {voteScore}
@@ -132,4 +141,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps, {getComments, updateComment, upVoteComment, downVoteComment })(Comments)
+export default connect(mapStateToProps, {getComments, updateComment, upVoteComment, downVoteComment, deleteComment })(Comments)

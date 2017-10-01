@@ -93,6 +93,7 @@ class CategoryView extends Component {
     const { url } = this.props.match.params
     return (
       <div className="container">
+        <Link to="/">Back to home</Link>
         <div className="jumbotron mt-3">
         <h1>{url.toUpperCase()}</h1>
         </div>

@@ -34,6 +34,7 @@ class PostDetailView extends Component {
       let dateString = new Date(timestamp).toString()
       return (
         <div>
+          <Link to="/">Back to home</Link>
           <div className="jumbotron mt-3">
             <h1>{title}</h1>
             <h3 className="card-text">By: {author}</h3>
