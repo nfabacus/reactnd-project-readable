@@ -19,13 +19,13 @@ class App extends Component {
         </div>
         <Switch>
           <Route exact path="/" component={Default}/>
-          <Route path="/postdetail" render={()=>
+          <Route exact path="/postdetail" render={()=>
             <h1>Post details</h1>
           }/>
-          <Route path="/category/:url" component={ CategoryView }/>
-          <Route path="/post/new" component={ PostNew }/>
-          <Route path="/posts/:id" component={ PostDetailView }/>
-          <Route path="/post/edit/:id" component={ PostEdit}/>
+          <Route exact path="/:category" component={ CategoryView }/>
+          <Route exact path="/post/new" component={ PostNew }/>
+          <Route exact path="/:category/:id" component={ PostDetailView }/>
+          <Route exact path="/post/edit/:id" component={ PostEdit}/>
         </Switch>
       </div>
     );

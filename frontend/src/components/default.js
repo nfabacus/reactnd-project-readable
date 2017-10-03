@@ -23,7 +23,7 @@ class Default extends Component {
   renderCategoryList() {
     if(this.props.categories.length !==0){
       return this.props.categories.map(({name, path})=>
-        <Link to={`/category/${name}`} key={path}><h3>{name}</h3></Link>)
+        <Link to={`/${name}`} key={path}><h3>{name}</h3></Link>)
     }
   }
 
@@ -82,7 +82,7 @@ class Default extends Component {
         return (
           <div  key={id} className="card mb-2">
             <div className="card-block bg-warning">
-              <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
+              <Link to={`/${category}/${id}`}><h3 className="card-text">{title}</h3></Link>
               <p className="card-text">{dateString}</p>
               <h4 className="card-text">
                 Votes: {voteScore}

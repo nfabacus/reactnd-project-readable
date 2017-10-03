@@ -12,9 +12,9 @@ class CategoryView extends Component {
   }
 
   componentDidMount() {
-    const { url } = this.props.match.params
-    console.log(url)
-    this.props.getCategoryPosts(url)
+    const { category } = this.props.match.params
+    console.log(category)
+    this.props.getCategoryPosts(category)
   }
 
   toggleVoteScoreSorting=()=>{
@@ -72,7 +72,7 @@ class CategoryView extends Component {
         return (
           <div  key={id} className="card mb-2">
           <div className="card-block bg-warning">
-            <Link to={`/posts/${id}`}><h3 className="card-text">{title}</h3></Link>
+            <Link to={`/${category}/${id}`}><h3 className="card-text">{title}</h3></Link>
             <p className="card-text">{dateString}</p>
             <h4 className="card-text">Votes: {voteScore}
               <i 
@@ -90,12 +90,12 @@ class CategoryView extends Component {
   }
 
   render() {
-    const { url } = this.props.match.params
+    const { category } = this.props.match.params
     return (
       <div className="container">
         <Link to="/">Back to home</Link>
         <div className="jumbotron mt-3">
-        <h1>{url.toUpperCase()}</h1>
+        <h1>{category.toUpperCase()}</h1>
         </div>
         
         <div className="row">
